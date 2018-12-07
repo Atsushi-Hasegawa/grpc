@@ -1,0 +1,48 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+package gateway;
+
+service PlayerService {
+  rpc GetPlayer(GetPlayerRequest) returns(PlayerResponse) {
+    option(google.api.http) = {
+      get: "/user/{id}"
+    };
+  }
+
+  rpc GetPlayerList(PlayerCountryRequest) returns(PlayersResponse) {
+    option(google.api.http) = {
+      get: "/user"
+    };
+  }
+}
+
+message Empty {}
+
+message GetPlayerRequest {
+  int64 id = 1;
+  string name = 2;
+  int64 age = 3;
+  string country = 4;
+}
+
+message PlayerResponse {
+  int64 id = 1;
+  string name = 2;
+  int64 age = 3;
+}
+
+message PlayersResponse {
+  Lang lang = 1;
+  repeated PlayerResponse users = 2;
+}
+
+enum Lang {
+  Japanese = 0;
+  English = 1;
+  Chinese = 2;
+  France = 3;
+}
+
+message PlayerCountryRequest {
+  Lang lang = 1;
+}
